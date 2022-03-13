@@ -26,7 +26,26 @@ const getGoalsByUserID = async (req, res, next) => {
   });
 };
 
-const getGoalByID = async (req, res, next) => {};
+const getGoalByID = async (req, res, next) => {
+  let goalID = req.params.goalID;
+  let goal;
+  try {
+    goal = await Goal.findOne({ where: { goalID: goalID } });
+  } catch (err) {
+    const error = new HttpError("Could not find goal using id provided", 404);
+    return next(error);
+  }
+
+  if (!goal) {
+    const error = new HttpError("Could not find goal using id provided", 404);
+    return next(error);
+  }
+
+  return res.status(200).json({
+    code: 200,
+    goal: goal,
+  });
+};
 
 const createGoal = async (req, res, next) => {};
 

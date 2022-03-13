@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const { sequelize } = require("./util/database");
+const { errorHandler } = require("./middleware/error-handler");
 
 const goalRoutes = require("./routes/goal-routes");
 
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/goal", goalRoutes);
+
+app.use(errorHandler);
 
 sequelize
   .sync()

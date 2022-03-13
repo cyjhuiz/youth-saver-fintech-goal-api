@@ -12,12 +12,12 @@ const router = express.Router();
 
 router.get("/", getGoalsByUserID);
 
-router.get("/", getGoalByID);
+router.get("/:goalID", getGoalByID);
 
 router.post("/", createGoal);
 
-router.put("/:goalId", updateGoal);
+router.put("/:goalID", updateGoal);
 
-router.delete("/:goalId", deleteGoal);
+router.delete("/:goalID", deleteGoal);
 
 module.exports = router;
