@@ -76,7 +76,49 @@ const createGoal = async (req, res, next) => {
   });
 };
 
-const updateGoal = async (req, res, next) => {};
+const updateGoal = async (req, res, next) => {
+  let goalID = req.params.goalID;
+
+  let goal;
+  try {
+    goal = await Goal.findOne({
+      where: {
+        goalID: goalID,
+      },
+    });
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not update goal",
+      500
+    );
+    return next(error);
+  }
+
+  if (!goal) {
+    const error = new HttpError("Goal being updated does not exist", 404);
+    return next(error);
+  }
+
+  for (key in req.body) {
+    if (goal.get(key)) {
+      goal[key] = req.body[key];
+    }
+  }
+
+  try {
+    await goal.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not update goal",
+      500
+    );
+    return next(error);
+  }
+
+  return res.status(200).json({
+    goalID: goalID,
+  });
+};
 
 const deleteGoal = async (req, res, next) => {};
 
