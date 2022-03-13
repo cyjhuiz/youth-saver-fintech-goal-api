@@ -1,7 +1,7 @@
 const express = require("express");
 
 const {
-  getGoalsByUserID,
+  getAllGoalsByUserID,
   getGoalByID,
   createGoal,
   updateGoal,
@@ -10,7 +10,7 @@ const {
 
 const router = express.Router();
 
-router.get("/", getGoalsByUserID);
+router.get("/", getAllGoalsByUserID);
 
 router.get("/:goalID", getGoalByID);
 

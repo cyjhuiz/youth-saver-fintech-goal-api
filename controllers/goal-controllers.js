@@ -2,7 +2,7 @@ const Goal = require("../models/goal");
 
 const HttpError = require("../models/http-error");
 
-const getGoalsByUserID = async (req, res, next) => {
+const getAllGoalsByUserID = async (req, res, next) => {
   let userID = req.query.userID;
   let goals;
   try {
@@ -150,7 +150,7 @@ const deleteGoal = async (req, res, next) => {
   });
 };
 
-exports.getGoalsByUserID = getGoalsByUserID;
+exports.getAllGoalsByUserID = getAllGoalsByUserID;
 exports.getGoalByID = getGoalByID;
 exports.createGoal = createGoal;
 exports.updateGoal = updateGoal;
