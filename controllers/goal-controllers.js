@@ -32,7 +32,10 @@ const getGoalByID = async (req, res, next) => {
   try {
     goal = await Goal.findOne({ where: { goalID: goalID } });
   } catch (err) {
-    const error = new HttpError("Could not find goal using id provided", 404);
+    const error = new HttpError(
+      "Something went wrong, could not find goal",
+      500
+    );
     return next(error);
   }
 
@@ -47,7 +50,31 @@ const getGoalByID = async (req, res, next) => {
   });
 };
 
-const createGoal = async (req, res, next) => {};
+const createGoal = async (req, res, next) => {
+  const { userID, goalName, goalPrice, productImgUrl, goalStatus } = req.body;
+
+  let goal;
+  try {
+    goal = await Goal.create({
+      userID,
+      goalName,
+      goalPrice,
+      productImgUrl,
+      goalStatus,
+    });
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find goal",
+      500
+    );
+    return next(error);
+  }
+
+  return res.status(201).json({
+    code: 201,
+    goalID: goal.goalID,
+  });
+};
 
 const updateGoal = async (req, res, next) => {};
 
