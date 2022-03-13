@@ -1,6 +1,30 @@
 const Goal = require("../models/goal");
 
-const getGoalsByUserID = async (req, res, next) => {};
+const HttpError = require("../models/http-error");
+
+const getGoalsByUserID = async (req, res, next) => {
+  let userID = req.query.userID;
+  let goals;
+  try {
+    goals = await Goal.findAll({
+      where: {
+        userID: userID,
+      },
+      raw: true,
+    });
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find goals.",
+      500
+    );
+    return next(error);
+  }
+
+  return res.status(200).json({
+    code: 200,
+    goals: goals,
+  });
+};
 
 const getGoalByID = async (req, res, next) => {};
 
