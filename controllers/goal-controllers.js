@@ -30,7 +30,7 @@ const getGoalByID = async (req, res, next) => {
   let goalID = req.params.goalID;
   let goal;
   try {
-    goal = await Goal.findOne({ where: { goalID: goalID } });
+    goal = await Goal.findByPk(goalID);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find goal",
@@ -81,11 +81,7 @@ const updateGoal = async (req, res, next) => {
 
   let goal;
   try {
-    goal = await Goal.findOne({
-      where: {
-        goalID: goalID,
-      },
-    });
+    goal = await Goal.findByPk(goalID);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not update goal",
